@@ -37,29 +37,23 @@ def process(frame):
     contours, hierarchy = cv2.findContours(thresh_image, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
     # make an new image for the corners
+    
 
     # using hierarchy to find corners
     for i, contour in enumerate(contours):
-        if hierarchy[0][i][2] == -1 and hierarchy[0][i][3] - 1 > -1:
+        if hierarchy[0][i][2] < 0:
                 cv2.drawContours(frame, [contour], -1, (0, 0, 255), 3) # red
 
-    # # process the image with the corners to then use convexHull
-    # corners_gray = cv2.cvtColor(corners, cv2.COLOR_BGR2GRAY)
+    # need another image with just the corner contours --> then pass into convex hull
 
-    # # threshhold of image / binarize image --> all pixels are either 0 for black or 255 for white.
-    # ret, corners_thresh = cv2.threshold(corners_gray, 128, 255, cv2.THRESH_BINARY)
-
-    # # find contours on corner image and then use convexHull
-    # contours, hierarchy = cv2.findContours(corners_thresh, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_SIMPLE)
-
-    # # contours = np.vstack([contour for contour in contours])
-
-    for contour in contours:
-        convex_hull = cv2.convexHull(contour)
-        cv2.drawContours(frame, [convex_hull], -1, (255, 0, 0), 3)
+    for i, contour in enumerate(contours):
+        if hierarchy[0][i][2] == -1: # makes sure there is no children --> innermost contour
+            convex_hull = cv2.convexHull(contour)
+            cv2.drawContours(frame, [convex_hull], -1, (255, 0, 0), 3)
 
     
-
+# this is currently how im trying to use convexHull to get a bounding box around the corners, but right now its making a bounding box around each corner that it detects instead of just one big square.
+# Just wondering how I would use convexHull to get a bounding box that goes around all 4 corners instead of each one individually
     # return processed images --> mask: is just color detection, contours_frame: is the contours
     return mask, frame
 
