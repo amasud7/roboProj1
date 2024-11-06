@@ -2,10 +2,11 @@ import cv2
 import numpy as np
 import pytesseract;
 from pytesseract import Output
+import time
 
 def detect_number(img):
     # Read the image
-    #img = cv2.imread('images/standard_5_balancing.jpg')
+    
 
     # convert bgr --> rgb because tesseract requires RGB colorspace for OCR computation
     # img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -63,22 +64,30 @@ def detect_number(img):
     #     cv2.destroyAllWindows()
 
 
+img = cv2.imread('images/hero_1.jpg')
+start_time = time.time() # originally in seconds
+img, output = detect_number(img)
+end_time = time.time()
+print((end_time - start_time) * 1000, ' ms')
+print(output)
 
 # trying live detection
-cam = cv2.VideoCapture(0)
+# cam = cv2.VideoCapture(0)
 
-while True:
-    cap, frame = cam.read()
-    output_frame, number = detect_number(frame)
-    print(number)
-    cv2.imshow('frame', output_frame)
+# while True:
+#     cap, frame = cam.read()
+#     output_frame, number = detect_number(frame)
+#     print(number)
+#     cv2.imshow('frame', output_frame)
 
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
+#     if cv2.waitKey(1) & 0xFF == ord('q'):
+#         break
 
-cv2.waitKey(0)
-cam.release()
-cv2.destroyAllWindows()
+# cv2.waitKey(0)
+# cam.release()
+# cv2.destroyAllWindows()
+
+# OCR is really slow
 
 
 
