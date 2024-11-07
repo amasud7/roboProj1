@@ -35,7 +35,8 @@ def get_contour(image): # process image and return major contour aka number
 def euclidian_distance(contour): # computes euclidian distance between contour and template
     # store hu moments of all templates somehow --> currently testing with this
     # temp_hu_moments = [-0.42033896, -1.2800598, -2.37100151, -3.00287561, -5.72290071, -3.64337416, -6.11469886] # this is for standard_3
-    temp_hu_moments = [-0.41209761, -1.0100353,  -1.99089754, -2.54051226, -4.84663678, -3.0727363, -5.1911946 ] # hero_1
+    temp_hu_moments =[-0.3762888, -1.06797808, -2.28293167, -3.00242794, -5.65180683, -3.53765858, -6.40381786] # standard_3 resized to 640x640
+    # temp_hu_moments = [-0.41209761, -1.0100353,  -1.99089754, -2.54051226, -4.84663678, -3.0727363, -5.1911946 ] # hero_1
 
     moments = cv2.moments(contour)
     img_hu_moments = cv2.HuMoments(moments).flatten()
@@ -56,7 +57,7 @@ def main():
     difference_list = []
     difference_list2 = []
     image_num = 0
-    for image in os.scandir('/Users/amasud7/Desktop/code/roboProj1/test_3'):
+    for image in os.scandir('/Users/amasud7/Desktop/code/roboProj1/test_1'):
         if image.path.endswith('.jpg'):
             # for each image compute euclidean distance and push back to list
             
@@ -88,12 +89,16 @@ main()
 
 
 
-
+# testing hu moments with these lines of code
 
 
 # # preprocess image
-# image = cv2.imread('images/hero_1.jpg')
-# gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+# image = cv2.imread('images/standard_3.jpg')
+
+# # change size to be the same as samples (640x640)
+# resize_img = cv2.resize(image, (640, 640))
+
+# gray = cv2.cvtColor(resize_img, cv2.COLOR_BGR2GRAY)
 # _, thresh = cv2.threshold(gray, 150, 255, cv2.THRESH_BINARY)
 
 # # inner contour of image
@@ -129,6 +134,7 @@ main()
 # log = np.log10(np.abs(hu_moments))
 # print(log)
 # # template = [0.42033896, 1.2800598, 2.37100151, 3.00287561, -5.72290071, -3.64337416, -6.11469886] # standard_3
+# # template = [-0.3762888, -1.06797808, -2.28293167, -3.00242794, -5.65180683, -3.53765858, -6.40381786] # resized 640x640 standard_3
 
 # # template = [-0.41209761, -1.0100353,  -1.99089754, -2.54051226, -4.84663678, -3.0727363,
 # #  -5.1911946 ] # hero_1
