@@ -30,8 +30,10 @@ areas = [cv2.contourArea(c) for c in child_contours]
 # index of max area contour
 max_area_index = areas.index(max(areas))
 
+
+
 # draw only the max area contour
-cv2.drawContours(image, child_contours, max_area_index, (0, 255, 0), thickness=cv2.FILLED)
+cv2.drawContours(image, child_contours, max_area_index, (0, 255, 0), 3) #thickness=cv2.FILLED
 
 
 # trying Hu-moments to compare images
