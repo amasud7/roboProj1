@@ -4,14 +4,17 @@ import numpy as np
 
 
 # Load the image
-image = cv2.imread('./images/hero_1.jpg')
+image = cv2.imread('images/engineer_2.jpg')
 
 # Convert the image to grayscale
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
 
 # threshold
-_, thresh = cv2.threshold(gray, 150, 255, cv2.THRESH_BINARY) # threhshold value, 65 is for real images, 150 for template images
+blurred = cv2.GaussianBlur(gray, (7, 7), 0)
+_, thresh = cv2.threshold(blurred, 100, 255, cv2.THRESH_BINARY) # threhshold value, 65 is for real images, 150 for template images
+
+
 
 
 # Find contours
